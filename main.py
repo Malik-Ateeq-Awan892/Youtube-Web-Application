@@ -1,4 +1,66 @@
+from flask import Flask, render_template, request, redirect, url_for
+app = Flask(__name__)
+
 channels = []
+
+class Channel:
+    def __init__(self, Channel_title, Channel_desc, Channel_url): #init method to initialize the object   
+        self.Channel_title = Channel_title
+        self.Channel_desc = Channel_desc
+        self.Channel_url = Channel_url
+    
+    def Display(self): #method to display the object
+        print("Channel Name: ", self.Channel_title, "\nChannel Description: ", self.Channel_desc, "\nChannel_url: ", self.Channel_url)
+@app.route('/')
+def index():
+    return render_template('index.html', channels = channels)
+
+@app.route("/add_channel", methods = ["POST"])
+def Add_Channel(): #method to add new channel by html form
+    Channel_title = request.form['title']
+    Channel_desc = request.form['desc']
+    Channel_url = request.form['url']
+    c1 = Channel(Channel_title, Channel_desc, Channel_url) #create the new channel
+    channels.append(c1) #add the new channel to the list
+    return redirect(url_for('index'))
+
+
+
+"""
+    
+    @staticmethod
+    def remove_channel(): #method to remove channel by name
+        print("Enter the name of channel to remove")
+        name = input()
+        for item in channels[:]: #loop through the list
+            temp = item.Channel_title #store the name of the channel temporary to show in putput if deleted or not
+            if item.Channel_title == name:
+                channels.remove(item) #removing the object
+                print("removed successfully: ",temp)
+                return
+        print(temp, "Channel not found")
+    
+    @staticmethod
+    def Display_All():
+        i = 1
+        for item in channels: # loop throgh the channels copy
+            print("S. No : ", i, end = " \n")
+            item.Display() #calling the display method for each object
+            i = i+1
+
+    
+
+c1 = Channel("airbnb", "online booking", "www.airbnb.com")
+c2=Channel.Add_Channel()
+c3=Channel.Add_Channel()
+c4=Channel.Add_Channel()
+channels[1].Display()
+channels[2].Display()
+c2.Display()
+Channel.remove_channel()
+Channel.Display_All()
+
+#v2
 class Channel:
     def __init__(self, Channel_title, Channel_desc, Channel_url): #init method to initialize the object   
         self.Channel_title = Channel_title
@@ -53,7 +115,8 @@ Channel.remove_channel()
 Channel.Display_All()
 
 
-"""
+
+#v1
 import time 
 import eel 
 from PIL import Image 
@@ -114,3 +177,5 @@ Channel.Add_Chananel()
 Channels[0].Display()
 
 """
+if __name__ == '__main__':
+    app.run(debug = True)

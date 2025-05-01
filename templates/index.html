@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Youtube Web Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  
+    
+</head>
+<body>
+    <h1>Channel List</h1>
+    <div class = "channel-list">
+        {% for c in channels %}
+   
+        <div class = "channel-card">
+            <strong>{{c.Channel_title}}</strong> <br>
+            <strong>{{c.Channel_desc}}</strong>
+            URL: <a href="{{c.Channel_url}}">{{c.Channel_url}}</a>
+        </div>
+        {% else %}
+           No Channels yet <br>
+        {% endfor %}
+
+    </div>
+    <h2>Add new Channel</h2>
+
+    <form method = 'POST' action = '/add_channel'>
+        <label>Tilte: </label> <br>
+        <input type = "text" name = "title" required><br>
+
+        <label> Description: </label>
+        <input type="text" name="desc" required><br>
+
+        <label> URL: </label>
+        <input type="text" name = "url" required>
+
+        <button type = "SUBMIT"> Add Channel  </button>
+    
+    </form>
+
+</body> 
+</html>
